@@ -92,6 +92,9 @@
                     document.getElementById('pix-payload').innerText = data.pix_code;
                     document.getElementById('pix-modal').classList.remove('hidden');
                     document.getElementById('pix-modal').classList.add('flex');
+
+                    const qrCodeImg = document.getElementById('pix-qr-code');
+                    qrCodeImg.src=`data:image/png;base64,${data.qr_code_base64}`;
                 }
             } catch (error) {
                 alert('Erro ao gerar PIX. Tente novamente.');

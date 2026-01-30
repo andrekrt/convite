@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('gift_id')->constrained();
-            $table->string('payer_nome');
+            $table->string('payer_name');
             $table->decimal('amount',10,2);
             $table->string('status')->default('pending');
             $table->string('payment_gateway_id')->nullable();

@@ -61,6 +61,7 @@ class PaymentService
             'status' => 'pending',
             'payment_gateway_id' => (string) $data['id'],
             'pix_code' => $data['point_of_interaction']['transaction_data']['qr_code'],
+            'qr_code_base64'=>$data['point_of_interaction']['transaction_data']['qr_code_base64']
         ]);
     }
 }

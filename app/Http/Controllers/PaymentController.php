@@ -17,6 +17,7 @@ class PaymentController extends Controller
 
             return response()->json([
                 'pix_code' => $transaction->pix_code,
+                'qr_code_base64'=>$transaction->qr_code_base64,
                 'amount' => number_format($transaction->amount, 2, ',', '.')
             ]);
         } catch (\Exception $e) {
