@@ -56,6 +56,7 @@
         <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center">
             <h3 class="text-xl font-bold mb-4">Seu presente simbólico</h3>
             <p class="text-sm text-slate-600 mb-4">Escaneie o QR Code ou copie o código abaixo:</p>
+            <img id="pix-qr-code" src="" class="mx-auto" style="min-width: 200px; min-height: 200px;">
 
             <div id="qrcode-container" class="bg-slate-100 p-4 rounded-xl mb-4 flex justify-center">
                 <p class="text-xs break-all font-mono border p-2 bg-white" id="pix-payload"></p>
@@ -70,7 +71,8 @@
 
     <script>
         async function generatePix(giftId, guestName) {
-            const button = event.target;
+            // 1. Captura o botão corretamente
+            const button = event.currentTarget || event.target;
             button.disabled = true;
             button.innerText = 'Gerando...';
 
@@ -79,6 +81,7 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Accept': 'application/json', // Garante que o Laravel saiba que você quer JSON
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     body: JSON.stringify({
@@ -88,16 +91,30 @@
 
                 const data = await response.json();
 
-                if (data.pix_code) {
-                    document.getElementById('pix-payload').innerText = data.pix_code;
-                    document.getElementById('pix-modal').classList.remove('hidden');
-                    document.getElementById('pix-modal').classList.add('flex');
+                // 2. Verifica se a requisição foi bem sucedida (status 200-299)
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erro no servidor');
+                }
 
+                if (data.pix_code) {
+                    // Exibe o texto Copia e Cola
+                    document.getElementById('pix-payload').innerText = data.pix_code;
+
+                    // Exibe o Modal
+                    const modal = document.getElementById('pix-modal');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+
+                    // 3. Renderiza a imagem do QR Code
                     const qrCodeImg = document.getElementById('pix-qr-code');
-                    qrCodeImg.src=`data:image/png;base64,${data.qr_code_base64}`;
+                    if (qrCodeImg && data.qr_code_base64) {
+                        qrCodeImg.src = `data:image/png;base64,${data.qr_code_base64}`;
+                        qrCodeImg.style.display = 'block'; // Garante que não esteja escondida via CSS
+                    }
                 }
             } catch (error) {
-                alert('Erro ao gerar PIX. Tente novamente.');
+                console.error('Erro detalhado:', error);
+                alert('Não foi possível gerar o QR Code. Por favor, tente novamente.');
             } finally {
                 button.disabled = false;
                 button.innerText = 'Presentear';
