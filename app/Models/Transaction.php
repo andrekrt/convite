@@ -12,7 +12,7 @@ class Transaction extends Model
         'amount',
         'status',
         'payment_gateway_id',
-        'pix_code'
+        'pix_code',
     ];
 
     public function gift()

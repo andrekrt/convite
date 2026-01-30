@@ -48,6 +48,10 @@ class PaymentService
 
         $data = $response->json();
 
+        Log::info('Resposta MP Completa:', ['keys' => array_keys($data['point_of_interaction']['transaction_data'] ?? [])]);
+
+        $qrCodeBase64 = $data['point_of_interaction']['transaction_data']['qr_code_base64'] ?? null;
+
         if ($response->failed()) {
             Log::error("Erro Mercado Pago API:", $data ?? []);
             throw new \Exception("Falha na API: " . ($data['message'] ?? 'Erro desconhecido'));
@@ -61,7 +65,7 @@ class PaymentService
             'status' => 'pending',
             'payment_gateway_id' => (string) $data['id'],
             'pix_code' => $data['point_of_interaction']['transaction_data']['qr_code'],
-            'qr_code_base64'=>$data['point_of_interaction']['transaction_data']['qr_code_base64']
+            'qr_code_base64'=>$qrCodeBase64
         ]);
     }
 }
