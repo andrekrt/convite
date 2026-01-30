@@ -21,7 +21,9 @@ class PaymentController extends Controller
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Não foi possível gerar o PIX no momento. Tente novamente em instantes.'
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
             ], 500);
         }
     }

@@ -13,7 +13,10 @@ class PaymentService
 
     public function __construct()
     {
-        $this->token = config('services.mercadopago.token') ?? '';
+        // Se o log mostrar que está vazio, o erro 500 é aqui!
+        if (empty($this->token)) {
+            Log::error("TOKEN DO MERCADO PAGO NÃO CONFIGURADO NO SERVICES.PHP");
+        }
     }
 
     public function createPixPayment(Gift $gift, $guestName)
@@ -31,11 +34,12 @@ class PaymentService
                 "description" => "Presente: " . $gift->title,
                 "payment_method_id" => "pix",
                 "payer" => [
-                    "email" => "convidado_" . time() . "@teste.com",
+                    "email" => "andrekrt1922@hotmail.com",
                     "first_name" => $guestName,
+                    "last_name" => "Da Silva",
                     "identification" => [
                         "type" => "CPF",
-                        "number" => "19119119100"
+                        "number" => "61280412305"
                     ]
                 ],
                 "installments" => 1
