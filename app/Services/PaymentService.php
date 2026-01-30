@@ -13,6 +13,7 @@ class PaymentService
 
     public function __construct()
     {
+        $this->token = config('services.mercadopago.token') ?? '';
         // Se o log mostrar que está vazio, o erro 500 é aqui!
         if (empty($this->token)) {
             Log::error("TOKEN DO MERCADO PAGO NÃO CONFIGURADO NO SERVICES.PHP");
