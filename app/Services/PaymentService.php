@@ -9,7 +9,7 @@ use App\Models\Transaction;
 
 class PaymentService
 {
-    private string $token;
+    private string $token = '';
 
     public function __construct()
     {
