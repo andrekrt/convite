@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('status')->default('pending');
             $table->string('payment_gateway_id')->nullable();
             $table->text('pix_code')->nullable();
+            $table->longText('qr_code_base64')->nullable();
             $table->timestamps();
         });
     }

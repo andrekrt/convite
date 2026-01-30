@@ -13,6 +13,7 @@ class Transaction extends Model
         'status',
         'payment_gateway_id',
         'pix_code',
+        'qr_code_base64'
     ];
 
     public function gift()
