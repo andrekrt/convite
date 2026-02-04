@@ -23,5 +23,9 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') === 'production' || !empty(env('ASSET_URL'))) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
+
+        if (!app()->isLocal()) {
+            URL::forceScheme('https');
+        }
     }
 }
