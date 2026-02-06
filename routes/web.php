@@ -15,7 +15,7 @@ Route::get('/convite/{code}',[InvitationController::class, 'show'])->name('invit
 Route::post('/convite/{code}/confirmar', [InvitationController::class, 'confirm'])->name('invitation.confirm');
 
 // Rotas do presente
-Route::post('/convite/pix/{gift}',[PaymentController::class, 'store'])->name('payment.pix');
+Route::post('/pagamento/pix/{gift}', [PaymentController::class, 'store'])->name('payment.pix');
 
 // Rotas de gerenciamento interno
 Route::middleware(['auth', 'verified'])->group(function () {
