@@ -8,9 +8,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 // Rotas do convite
 Route::get('/convite/{code}',[InvitationController::class, 'show'])->name('invitation.show');
@@ -21,6 +19,7 @@ Route::post('/convite/pix/{gift}',[PaymentController::class, 'store'])->name('pa
 
 // Rotas de gerenciamento interno
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Dashboard principal do Breeze
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
