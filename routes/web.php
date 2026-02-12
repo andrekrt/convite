@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 // Rotas do convite
 Route::get('/convite/{code}',[InvitationController::class, 'show'])->name('invitation.show');
 Route::post('/convite/{code}/confirmar', [InvitationController::class, 'confirm'])->name('invitation.confirm');
+Route::get('/covinte/{code}/presentes',[InvitationController::class,'index'])->name('invitation.gifts');
 
 // Rotas do presente
 Route::post('/pagamento/pix/{gift}', [PaymentController::class, 'store'])->name('payment.pix');

@@ -27,4 +27,10 @@ class InvitationController extends Controller
 
         return redirect()->back()->with('success', "Presença confirmada com sucesso!");
     }
+
+    public function index($code){
+        $guest = Guest::where('invite_code',$code)->firstOrFail();
+        $gifts = Gift::where('is_active', true)->get();
+        return view('guest.gifts', compact('gifts', 'guest'));
+    }
 }
